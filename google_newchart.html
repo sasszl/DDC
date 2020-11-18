@@ -1,0 +1,63 @@
+<html>                                                                                                                                  
+  <head>                                                                                                                                
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>                                             
+    <script type="text/javascript">                                                                                                     
+      google.charts.load("current", {packages:["corechart"]});                                                                          
+      google.charts.setOnLoadCallback(drawChart);                                                                                       
+      function drawChart() {                                                                                                            
+        var data = google.visualization.arrayToDataTable([                                                                              
+          ['Task', 'Hours per Day'],                                                                                                    
+          ['Work',     11],                                                                                                             
+          ['Eat',      2],                                                                                                              
+          ['Commute',  2],                                                                                                              
+          ['Watch TV', 2],                                                                                                              
+          ['Sleep',    7]                                                                                                               
+        ]);                                                                                                                             
+                                                                                                                                        
+        var options = {                                                                                                                 
+          title: 'My Daily Activities',                                                                                                 
+          is3D: true,                                                                                                                   
+        };                                                                                                                              
+                                                                                                                                        
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));                                          
+        chart.draw(data, options);                                                                                                      
+      }                                                                                                                                 
+                                                                                                                                        
+      function onMessage (evt) {                                                                                                        
+        if (evt && evt.data &&evt.data.hasOwnProperty("data"))                                                                          
+            updateData(evt.data);                                                                                                       
+              }                                                                                                                         
+        if (window.addEventListener) {                                                                                                  
+            // For standards-compliant web browsers                                                                                     
+            window.addEventListener("message", onMessage, false);                                                                       
+           }                                                                                                                            
+        else {                                                                                                                          
+            window.attachEvent("onmessage", onMessage);                                                                                 
+           }                                                                                                                            
+                                                                                                                                        
+      //create trigger to resizeEnd event                                                                                               
+      $(window).resize(function() {                                                                                                     
+        if (this.resizeTo)                                                                                                              
+        clearTImeout(this.resizeTO);                                                                                                    
+        this.resizeTO = setTiemout(function() {                                                                                         
+           $(this).trigger('resizeEnd');                                                                                                
+        }, 25);                                                                                                                         
+      });                                                                                                                               
+                                                                                                                                        
+      //redraw graph when window resize is completed                                                                                    
+      $(window).on('resizeEnd', function() {                                                                                            
+        drawChart();                                                                                                                    
+      });                                                                                                                               
+                                                                                                                                        
+      function drawChart()                                                                                                              
+        {                                                                                                                               
+           if (bar)                                                                                                                     
+               bar.draw(datam options);                                                                                                 
+        }                                                                                                                               
+                                                                                                                                        
+    </script>                                                                                                                           
+  </head>                                                                                                                               
+  <body>                                                                                                                                
+    <div id="piechart_3d" style="width: 900px; height: 500px;"></div>                                                                   
+  </body>                                                                                                                               
+</html>
